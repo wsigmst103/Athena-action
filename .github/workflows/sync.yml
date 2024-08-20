@@ -26,6 +26,38 @@ jobs:
        with:
         query-context: Catalog=AwsDataCatalog,Database=test
         query-string: |
-          SELECT * FROM mycsv
+          SELECT SUBSTRING('201', 78) as server_status, COUNT(*) as request_count
+          FROM mycsv
+          WHERE access_log LIKE '%201%'
+          UNION
+
+          SELECT SUBSTRING('404', 78) as server_status, COUNT(*) as request_count
+          FROM mycsv
+          WHERE access_log LIKE '%404%'
+          UNION
+
+          SELECT SUBSTRING('502', 78) as server_status, COUNT(*) as request_count
+          FROM mycsv
+          WHERE access_log LIKE '%502%'
+          UNION
+
+          SELECT SUBSTRING('500', 78) as server_status, COUNT(*) as request_count
+          FROM mycsv
+          WHERE access_log LIKE '%500%'
+          UNION
+
+          SELECT SUBSTRING('200', 78) as server_status, COUNT(*) as request_count
+          FROM mycsv
+          WHERE access_log LIKE '%200%'
+          UNION
+
+          SELECT SUBSTRING('304', 78) as server_status, COUNT(*) as request_count
+          FROM mycsv
+          WHERE access_log LIKE '%304%'
+          UNION
+
+          SELECT SUBSTRING('204', 78) as server_status, COUNT(*) as request_count
+          FROM mycsv
+          WHERE access_log LIKE '%204%';
         output-location: s3://wsi-atena-103-test/github-action-result/
         output-filename: Access_logs.csv
