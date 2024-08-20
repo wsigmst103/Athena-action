@@ -26,6 +26,6 @@ jobs:
        with:
         query-context: Catalog=AwsDataCatalog,Database=test
         query-string: |
-          SELECT * FROM my_table
+          SELECT * FROM mycsv
         output-location: s3://wsi-atena-103-test/github-action-result/
         output-filename: Access_logs.csv
