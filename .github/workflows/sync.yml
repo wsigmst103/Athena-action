@@ -21,6 +21,11 @@ jobs:
          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
          aws-region: us-east-1
 
-     - name: Deploy static site to S3 bucket
-       run: | 
-        aws s3 cp s3://wsi-atena-103-test/Access_logs.txt .
+     - name: Run Athena Query
+       uses: idealo/aws-athena-query-action@v1
+       with:
+        query-context: Catalog=AwsDataCatalog,Database=test
+        query-string: |
+          SELECT * FROM my_table
+        output-location: s3://wsi-atena-103-test/github-action-result/
+        output-filename: Access_logs.csv
